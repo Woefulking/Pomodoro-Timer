@@ -1,11 +1,13 @@
-export type Mode = 'work' | 'shortBreak' | 'longBreak';
+export type Mode = 'pomodoro' | 'shortBreak' | 'longBreak';
 
-export type Settings = Record<Mode, number>;
+export interface TimerSettings {
+    pomodoro: number,
+    shortBreak: number,
+    longBreak: number,
+}
 
-export interface TimerState {
-  mode: Mode;
-  timeLeft: number;
-  isRunning: boolean;
-  pomodoroCount: number;
-  settings: Settings;
+export interface Settings extends TimerSettings {
+    longBrealInterval?: number,
+    notification?: string,
+    background?: string;
 }

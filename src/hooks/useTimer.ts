@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { settings } from './useLocalStorage';
-import type { Mode } from '@/types';
+import type { Mode, Settings } from '@/types';
 import { switchMode } from '@/helpers/switchMode';
 
-export function useTimer() {
-  const [mode, setMode] = useState<Mode>('work');
+export function useTimer(settings: Settings) {
+  const [mode, setMode] = useState<Mode>('pomodoro');
   const [timeLeft, setTimeLeft] = useState<number>(settings[mode]);
   const [isRunning, setIsRunning] = useState<boolean>(false);
 
@@ -32,7 +31,7 @@ export function useTimer() {
     setIsRunning(false);
     const nextMode = switchMode(mode, pomodoroCount.current);
 
-    if (mode === 'work') {
+    if (mode === 'pomodoro') {
       pomodoroCount.current++;
     }
 
