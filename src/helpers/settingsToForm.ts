@@ -1,9 +1,10 @@
-import type { Settings } from "@/types";
+import type { TimerSettings } from "@/types";
 
-export function settingsToForm(settings: Settings) {
+export function settingsToForm(settings: TimerSettings) {
     return {
         pomodoro: settings.pomodoro.toString(),
         shortBreak: settings.shortBreak.toString(),
         longBreak: settings.longBreak.toString(),
+        longBreakInterval: settings.longBreakInterval.toString(),
     }
 }

@@ -4,10 +4,10 @@ export interface TimerSettings {
     pomodoro: number,
     shortBreak: number,
     longBreak: number,
+    longBreakInterval: number,
 }
 
 export interface Settings extends TimerSettings {
-    longBrealInterval?: number,
     notification?: string,
     background?: string;
 }

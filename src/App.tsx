@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import './App.css'
 import { formatTime } from './helpers/formatTime';
 import { useTimer } from './hooks/useTimer';
 import { useSettings } from './hooks/useSettings';
 import { settingsToForm } from './helpers/settingsToForm';
+import type { TimerSettings } from './types';
+import './App.css'
 
 function App() {
   const { settings, updateSettings } = useSettings();
@@ -13,10 +14,11 @@ function App() {
   const [localSettings, setLocalSettings] = useState(() => settingsToForm(settings));
 
   const handleUpdateSettings = () => {
-    const newSettings = {
+    const newSettings: TimerSettings = {
       pomodoro: Number(localSettings.pomodoro) || settings.pomodoro,
       shortBreak: Number(localSettings.shortBreak) || settings.shortBreak,
       longBreak: Number(localSettings.longBreak) || settings.longBreak,
+      longBreakInterval: Number(localSettings.longBreakInterval) || settings.longBreakInterval,
     }
 
     updateSettings(newSettings)
@@ -38,7 +40,7 @@ function App() {
 
       <div className='settings'>
         <input
-          type='text'
+          type='number'
           placeholder='Pomodoro'
           value={localSettings.pomodoro}
           onChange={(e) => setLocalSettings({
@@ -47,7 +49,7 @@ function App() {
           })}
         />
         <input
-          type='text'
+          type='number'
           placeholder='Short Break'
           value={localSettings.shortBreak}
           onChange={(e) => setLocalSettings({
@@ -56,12 +58,21 @@ function App() {
           })}
         />
         <input
-          type='text'
+          type='number'
           placeholder='Long Break'
           value={localSettings.longBreak}
           onChange={(e) => setLocalSettings({
             ...localSettings,
-            longBreak: e.target.value
+            longBreak: e.target.value,
+          })}
+        />
+        <input
+          type='number'
+          placeholder='Long Break Interval'
+          value={localSettings.longBreakInterval}
+          onChange={(e) => setLocalSettings({
+            ...localSettings,
+            longBreakInterval: e.target.value,
           })}
         />
         <button className='saveSettings' onClick={handleUpdateSettings}>Save</button>

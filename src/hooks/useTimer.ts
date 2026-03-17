@@ -1,10 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
-import type { Mode, Settings } from '@/types';
+import type { Mode, TimerSettings } from '@/types';
 import { switchMode } from '@/helpers/switchMode';
 
-export function useTimer(settings: Settings) {
+export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }: TimerSettings) {
+
+  const durations: Record<Mode, number> = {
+    pomodoro,
+    shortBreak,
+    longBreak
+  }
+
   const [mode, setMode] = useState<Mode>('pomodoro');
-  const [timeLeft, setTimeLeft] = useState<number>(settings[mode]);
+  const [timeLeft, setTimeLeft] = useState<number>(durations[mode]);
   const [isRunning, setIsRunning] = useState<boolean>(false);
 
   const pomodoroCount = useRef(0);
@@ -29,16 +36,17 @@ export function useTimer(settings: Settings) {
     if (timeLeft >= 0) return;
 
     setIsRunning(false);
-    const nextMode = switchMode(mode, pomodoroCount.current);
 
     if (mode === 'pomodoro') {
       pomodoroCount.current++;
     }
 
-    setMode(nextMode);
-    setTimeLeft(settings[nextMode]);
+    const nextMode = switchMode(mode, pomodoroCount.current, longBreakInterval);
 
-    endTime.current = Date.now() + settings[nextMode] * 1000;
+    setMode(nextMode);
+    setTimeLeft(durations[nextMode]);
+
+    endTime.current = Date.now() + durations[nextMode] * 1000;
   }, [timeLeft]);
 
 
@@ -54,7 +62,7 @@ export function useTimer(settings: Settings) {
   //Сброс таймера
   const reset = () => {
     setIsRunning(false);
-    setTimeLeft(settings[mode]);
+    setTimeLeft(durations[mode]);
     endTime.current = null
   }
 

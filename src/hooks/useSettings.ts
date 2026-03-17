@@ -5,6 +5,7 @@ export const defaultSettings: Settings = {
     pomodoro: 3,
     shortBreak: 1,
     longBreak: 2,
+    longBreakInterval: 4,
 };
 
 export function useSettings() {
