@@ -1,0 +1,37 @@
+.tomatofall {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+
+  overflow: hidden;
+}
+
+.tomato {
+  position: relative;
+  top: -50px;
+  bottom: auto;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+
+  animation-name: tomatofall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes tomatofall {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(calc(100vh + 50px)) rotate(calc(360deg * var(--rotations, 1)));
+  }
+}
