@@ -102,7 +102,7 @@ function App() {
             onMouseLeave={() => setIsHovering(false)}
           >
             <img
-              src='src/assets/images/settings3.png'
+              src='src/assets/images/settings.png'
               style={{ transform: `rotate(${rotation}deg)` }}
               alt='settings'
             />
