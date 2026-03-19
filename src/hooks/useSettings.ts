@@ -21,8 +21,8 @@ export function useSettings() {
     const updateSettings = (newSettings: Settings) => {
         setSettings(newSettings);
         localStorage.setItem('settings', JSON.stringify(newSettings));
-    }
+    };
 
-    return { settings, updateSettings }
+    return { settings, updateSettings };
 
 }

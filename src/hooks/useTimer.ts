@@ -19,11 +19,6 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
   const endTime = useRef<number | null>(null);
 
   const currentDuration = durations[mode];
-  const alarmRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    alarmRef.current = new Audio('src/assets/sounds/alarm.mp3');
-  }, [])
 
   useEffect(() => {
     if (!isRunning) {
@@ -65,10 +60,6 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
 
     setIsRunning(false);
 
-    if (alarmRef.current) {
-      alarmRef.current.play();
-    }
-
     if (mode === 'pomodoro') {
       pomodoroCount.current++;
     }
@@ -85,11 +76,6 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
     if (!isRunning) {
       startTime.current = Date.now();
       endTime.current = Date.now() + timeLeft * 1000;
-
-      if (alarmRef.current) {
-        alarmRef.current.currentTime = 0;
-        alarmRef.current.pause();
-      }
 
       setIsRunning(true);
     } else {
