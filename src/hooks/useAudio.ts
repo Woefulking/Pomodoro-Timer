@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 
 export type SoundType = 'alarm' | 'click';
 
@@ -7,9 +7,7 @@ const sounds: Record<SoundType, string> = {
     click: 'src/assets/sounds/click.mp3',
 };
 
-export function useAudio() {
-    const [volume, setVolume] = useState(75);
-
+export function useAudio(volume: number) {
     const audioMapRef = useRef<Record<SoundType, HTMLAudioElement> | null>(null);
 
     useEffect(() => {
@@ -19,7 +17,7 @@ export function useAudio() {
         };
     }, []);
 
-    const play = (sound: SoundType) => {
+    const play = (sound: SoundType, volume: number) => {
         const audio = audioMapRef.current?.[sound];
         if (!audio) return;
 
@@ -36,9 +34,5 @@ export function useAudio() {
         audio.currentTime = 0;
     };
 
-    const changeVolume = (volume: number) => {
-        setVolume(volume);
-    }
-
-    return { volume, setVolume, play, stop, changeVolume };
+    return { play, stop };
 }

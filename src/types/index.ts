@@ -8,6 +8,7 @@ export interface TimerSettings {
 }
 
 export interface Settings extends TimerSettings {
+    volume: number,
     notification?: string,
     background?: string;
 }

@@ -6,8 +6,9 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const { volume, play, stop, changeVolume } = useAudio();
   const { settings, updateSettings } = useSettings();
+  const { volume } = settings;
+  const { play, stop } = useAudio(volume);
 
   const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false);
 
@@ -24,8 +25,6 @@ function App() {
         <Settings
           settings={settings}
           isSettingsOpen={isSettingsOpen}
-          volume={volume}
-          onChangeVolume={changeVolume}
           playSound={play}
           onUpdateSettings={updateSettings}
           onCloseSettings={() => setSettingsOpen(false)}

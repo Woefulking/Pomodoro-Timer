@@ -1,0 +1,42 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: 18px;
+  color: var(--black);
+}
+
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 4px;
+  background-color: var(--primary);
+  outline: none;
+  cursor: pointer;
+
+  &::-webkit-slider-thumb {
+    margin-top: -4px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 20px;
+    width: 20px;
+    image-rendering: pixelated;
+    background: transparent;
+    background-image: url('/src/assets/images/tomato.png');
+    background-size: cover;
+  }
+
+  &::-moz-range-thumb {
+    height: 20px;
+    width: 20px;
+    image-rendering: pixelated;
+    background: transparent;
+    background-image: url('/src/assets/images/tomato.png');
+    background-size: cover;
+  }
+}

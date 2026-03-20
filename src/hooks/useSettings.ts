@@ -6,6 +6,7 @@ export const defaultSettings: Settings = {
     shortBreak: 1,
     longBreak: 2,
     longBreakInterval: 4,
+    volume: 25,
 };
 
 export function useSettings() {

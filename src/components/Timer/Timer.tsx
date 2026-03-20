@@ -11,7 +11,7 @@ interface TimerProps {
     settings: Settings;
     onOpenSettings: () => void;
     audio: {
-        play: (sound: SoundType) => void;
+        play: (sound: SoundType, volume: number) => void;
         stop: (sound: SoundType) => void;
     }
 }
@@ -24,7 +24,7 @@ export const Timer = (props: TimerProps) => {
 
     useEffect(() => {
         if (timeLeft < 0) {
-            audio.play('alarm');
+            audio.play('alarm', settings.volume);
         }
     }, [timeLeft]);
 
@@ -43,7 +43,7 @@ export const Timer = (props: TimerProps) => {
                                 audio.stop('alarm');
                             }
                             toggle();
-                            audio.play('click');
+                            audio.play('click', settings.volume);
                         }}
                     >
                         {!isRunning ? 'Start' : 'Pause'}
@@ -57,7 +57,7 @@ export const Timer = (props: TimerProps) => {
                             }
 
                             reset();
-                            audio.play('click');
+                            audio.play('click', settings.volume);
                         }}
                     >
                         Reset

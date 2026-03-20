@@ -13,14 +13,14 @@
   width: 100px;
   border: none;
   border-radius: 4px;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--primary);
 
   padding: 10px;
   font-size: 16px;
 
   &::placeholder {
-    color: var(--text-muted);
+    color: var(--muted);
+    font-size: 12px;
   }
 
   &:hover,

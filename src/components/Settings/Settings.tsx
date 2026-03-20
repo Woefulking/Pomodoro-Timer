@@ -1,32 +1,33 @@
-import type { Settings as settingsType, TimerSettings } from '@/types';
+import type { Settings as settingsType } from '@/types';
 import { useEffect, useState } from 'react';
 import { settingsToForm } from '@/helpers/settingsToForm';
 import { Input } from '../Input/Input';
 import type { SoundType } from '@/hooks/useAudio';
 import clsx from 'clsx';
 import cls from './Settings.module.scss';
+import { Range } from '../Range/Range';
 
 interface SettingsProps {
     settings: settingsType;
     isSettingsOpen: boolean;
-    volume: number;
-    onChangeVolume: (volume: number) => void;
-    playSound: (sound: SoundType) => void;
+    // volume: number;
+    // onChangeVolume: (volume: number) => void;
+    playSound: (sound: SoundType, volume: number) => void;
     onCloseSettings: () => void;
     onUpdateSettings: (newSettings: settingsType) => void;
 }
 
 export const Settings = (props: SettingsProps) => {
-    const { settings, isSettingsOpen, volume, onChangeVolume, playSound, onCloseSettings, onUpdateSettings } = props;
-
+    const { settings, isSettingsOpen, playSound, onCloseSettings, onUpdateSettings } = props;
     const [localSettings, setLocalSettings] = useState(() => settingsToForm(settings));
 
     const handleUpdateSettings = () => {
-        const newSettings: TimerSettings = {
+        const newSettings: settingsType = {
             pomodoro: Number(localSettings.pomodoro) || settings.pomodoro,
             shortBreak: Number(localSettings.shortBreak) || settings.shortBreak,
             longBreak: Number(localSettings.longBreak) || settings.longBreak,
             longBreakInterval: Number(localSettings.longBreakInterval) || settings.longBreakInterval,
+            volume: Number(localSettings.volume) || settings.volume,
         };
 
         onUpdateSettings(newSettings);
@@ -41,7 +42,7 @@ export const Settings = (props: SettingsProps) => {
     }, [isSettingsOpen, settings]);
 
     return (
-        <div className={clsx(cls.overlay, { [cls.fadeOut]: !isSettingsOpen })}>
+        <div className={clsx(cls.overlay)}>
             <div className={clsx(cls.content)}>
                 <div className={clsx(cls.settings)}>
                     <div className={clsx(cls.header)}>
@@ -50,7 +51,7 @@ export const Settings = (props: SettingsProps) => {
                             type='button'
                             className={clsx(cls.close)}
                             onClick={() => {
-                                playSound('click');
+                                playSound('click', Number(localSettings.volume));
                                 onCloseSettings();
                             }}
                         >
@@ -109,18 +110,20 @@ export const Settings = (props: SettingsProps) => {
                         />
                     </div>
                     <div className={clsx(cls.volume)}>
-                        <Input
-                            type='range'
-                            className={clsx(cls.horizontal)}
+                        <Range
                             name='volume'
                             label='Volume'
-                            placeholder='Volume'
-                            min="0"
-                            max="100"
-                            step="1"
-                            value={String(volume)}
-                            onChange={(value: string) => onChangeVolume(Number(value))}
+                            min={0}
+                            max={100}
+                            step={1}
+                            value={Number(localSettings.volume)}
+                            onChange={(value: string) => setLocalSettings(prev => ({
+                                ...prev,
+                                volume: value,
+                            }))
+                            }
                         />
+
                     </div>
                 </div>
 
@@ -129,7 +132,8 @@ export const Settings = (props: SettingsProps) => {
                     className={clsx(cls.save)}
                     onClick={() => {
                         handleUpdateSettings();
-                        playSound('click');
+                        playSound('click', Number(localSettings.volume));
+
                     }}
                 >
                     Save
