@@ -17,12 +17,19 @@ export function useAudio(volume: number) {
         };
     }, []);
 
-    const play = (sound: SoundType, volume: number) => {
+    useEffect(() => {
+        if (audioMapRef.current) {
+            Object.values(audioMapRef.current).forEach(audio => {
+                audio.volume = volume / 100;
+            });
+        }
+    }, [volume]);
+
+    const play = (sound: SoundType) => {
         const audio = audioMapRef.current?.[sound];
         if (!audio) return;
 
         audio.currentTime = 0;
-        audio.volume = volume / 100;
         audio.play();
     };
 

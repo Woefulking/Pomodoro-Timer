@@ -4,27 +4,32 @@ import { Timer } from './components/Timer/Timer';
 import { Settings } from './components/Settings/Settings';
 import { useState } from 'react';
 import './App.css';
+import { useTimer } from './hooks/useTimer';
 
 function App() {
   const { settings, updateSettings } = useSettings();
-  const { volume } = settings;
-  const { play, stop } = useAudio(volume);
+  const audio = useAudio(settings.volume);
+  const timer = useTimer(settings);
+
+  const { timeLeft, mode, isRunning, toggle, reset } = timer;
+  const { play, stop, } = audio;
 
   const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false);
 
-  //@TODO 
-  //Подумать какую анимацию лучше сделать для кнопки настроек
-  //Удалить ненужный импорт svgr
-  //Добавить сохранение настроек громкости в localStorage
-  //Сделать кастомный  input range и input number
-
   return (
     <div className='app'>
-      <Timer settings={settings} audio={{ play, stop }} onOpenSettings={() => setSettingsOpen(true)} />
+      <Timer
+        timeLeft={timeLeft}
+        mode={mode}
+        isRunning={isRunning}
+        onToggle={toggle}
+        onReset={reset}
+        audio={{ play, stop, volume: settings.volume }}
+        onOpenSettings={() => setSettingsOpen(true)}
+      />
       {isSettingsOpen &&
         <Settings
           settings={settings}
-          isSettingsOpen={isSettingsOpen}
           playSound={play}
           onUpdateSettings={updateSettings}
           onCloseSettings={() => setSettingsOpen(false)}

@@ -22,7 +22,7 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
 
   useEffect(() => {
     if (!isRunning) {
-      setTimeLeft(currentDuration);
+      setTimeLeft(currentDuration * 60);
     }
   }, [currentDuration]);
 
@@ -31,7 +31,7 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
     if (!isRunning || !endTime.current) return;
 
     const elapsed = Date.now() - startTime.current!; // сколько прошло
-    const newDuration = durations[mode] * 1000; // новое значение таймера
+    const newDuration = durations[mode] * 60 * 1000; // новое значение таймера
     const newRemaining = newDuration - elapsed; //сколько останется после изменения времени
 
     endTime.current = Date.now() + newRemaining;

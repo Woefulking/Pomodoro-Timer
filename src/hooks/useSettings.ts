@@ -2,11 +2,11 @@ import type { Settings } from "@/types";
 import { useState } from "react";
 
 export const defaultSettings: Settings = {
-    pomodoro: 3,
-    shortBreak: 1,
-    longBreak: 2,
+    pomodoro: 25,
+    shortBreak: 5,
+    longBreak: 15,
     longBreakInterval: 4,
-    volume: 25,
+    volume: 75,
 };
 
 export function useSettings() {
@@ -19,9 +19,12 @@ export function useSettings() {
         return defaultSettings;
     });
 
-    const updateSettings = (newSettings: Settings) => {
-        setSettings(newSettings);
-        localStorage.setItem('settings', JSON.stringify(newSettings));
+    const updateSettings = (partial: Partial<Settings>) => {
+        setSettings(prev => {
+            const next = { ...prev, ...partial };
+            localStorage.setItem('settings', JSON.stringify(next));
+            return next;
+        });
     };
 
     return { settings, updateSettings };

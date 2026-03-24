@@ -1,30 +1,33 @@
 import clsx from 'clsx';
 import cls from './Timer.module.scss';
 import { formatTime } from '@/helpers/formatTime';
-import type { Settings } from '@/types';
-import { useTimer } from '@/hooks/useTimer';
+import type { Mode } from '@/types';
 import type { SoundType } from '@/hooks/useAudio';
 import { TomatoFalls } from '../TomatoFall/TomatoFall';
 import { useEffect } from 'react';
 
 interface TimerProps {
-    settings: Settings;
+    timeLeft: number;
+    mode: Mode;
+    isRunning: boolean;
+    onToggle: () => void;
+    onReset: () => void;
     onOpenSettings: () => void;
     audio: {
+        volume: number;
         play: (sound: SoundType, volume: number) => void;
         stop: (sound: SoundType) => void;
     }
 }
 
 export const Timer = (props: TimerProps) => {
-    const { settings, onOpenSettings, audio } = props;
-    const { timeLeft, mode, isRunning, toggle, reset } = useTimer(settings);
+    const { timeLeft, mode, isRunning, onToggle, onReset, onOpenSettings, audio } = props;
 
     const isPomodoro = mode === 'pomodoro';
 
     useEffect(() => {
         if (timeLeft < 0) {
-            audio.play('alarm', settings.volume);
+            audio.play('alarm', audio.volume);
         }
     }, [timeLeft]);
 
@@ -42,8 +45,8 @@ export const Timer = (props: TimerProps) => {
                             if (!isRunning) {
                                 audio.stop('alarm');
                             }
-                            toggle();
-                            audio.play('click', settings.volume);
+                            onToggle();
+                            audio.play('click', audio.volume);
                         }}
                     >
                         {!isRunning ? 'Start' : 'Pause'}
@@ -56,8 +59,8 @@ export const Timer = (props: TimerProps) => {
                                 audio.stop('alarm');
                             }
 
-                            reset();
-                            audio.play('click', settings.volume);
+                            onReset();
+                            audio.play('click', audio.volume);
                         }}
                     >
                         Reset
@@ -72,7 +75,6 @@ export const Timer = (props: TimerProps) => {
                 >
                     <img
                         src='src/assets/images/settings.png'
-                        // style={{ transform: `rotate(${rotation}deg)` }}
                         alt='settings'
                     />
                 </button>

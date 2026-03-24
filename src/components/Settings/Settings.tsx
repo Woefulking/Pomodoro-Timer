@@ -1,5 +1,5 @@
 import type { Settings as settingsType } from '@/types';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { settingsToForm } from '@/helpers/settingsToForm';
 import { Input } from '../Input/Input';
 import type { SoundType } from '@/hooks/useAudio';
@@ -9,37 +9,28 @@ import { Range } from '../Range/Range';
 
 interface SettingsProps {
     settings: settingsType;
-    isSettingsOpen: boolean;
-    // volume: number;
-    // onChangeVolume: (volume: number) => void;
     playSound: (sound: SoundType, volume: number) => void;
     onCloseSettings: () => void;
-    onUpdateSettings: (newSettings: settingsType) => void;
+    onUpdateSettings: (partial: Partial<settingsType>) => void;
 }
 
 export const Settings = (props: SettingsProps) => {
-    const { settings, isSettingsOpen, playSound, onCloseSettings, onUpdateSettings } = props;
+    const { settings, playSound, onCloseSettings, onUpdateSettings } = props;
     const [localSettings, setLocalSettings] = useState(() => settingsToForm(settings));
 
-    const handleUpdateSettings = () => {
-        const newSettings: settingsType = {
-            pomodoro: Number(localSettings.pomodoro) || settings.pomodoro,
-            shortBreak: Number(localSettings.shortBreak) || settings.shortBreak,
-            longBreak: Number(localSettings.longBreak) || settings.longBreak,
-            longBreakInterval: Number(localSettings.longBreakInterval) || settings.longBreakInterval,
-            volume: Number(localSettings.volume) || settings.volume,
-        };
-
-        onUpdateSettings(newSettings);
-        setLocalSettings(settingsToForm(newSettings));
-        onCloseSettings();
+    const handleChangeSettings = (key: keyof settingsType, value: string | number) => {
+        setLocalSettings(prev => ({ ...prev, [key]: value }));
     }
 
-    useEffect(() => {
-        if (isSettingsOpen) {
-            setLocalSettings(settingsToForm(settings));
-        }
-    }, [isSettingsOpen, settings]);
+    const handleSaveSettings = () => {
+        onUpdateSettings({
+            pomodoro: Number(localSettings.pomodoro),
+            shortBreak: Number(localSettings.shortBreak),
+            longBreak: Number(localSettings.longBreak),
+            longBreakInterval: Number(localSettings.longBreakInterval),
+        });
+        onCloseSettings();
+    };
 
     return (
         <div className={clsx(cls.overlay)}>
@@ -51,7 +42,7 @@ export const Settings = (props: SettingsProps) => {
                             type='button'
                             className={clsx(cls.close)}
                             onClick={() => {
-                                playSound('click', Number(localSettings.volume));
+                                playSound('click', Number(settings.volume));
                                 onCloseSettings();
                             }}
                         >
@@ -66,10 +57,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Pomodoro'
                             placeholder='Pomodoro time'
                             value={localSettings.pomodoro}
-                            onChange={(value: string) => setLocalSettings(prev => ({
-                                ...prev,
-                                pomodoro: value,
-                            }))}
+                            onChange={(value: string) => handleChangeSettings('pomodoro', value)}
                         />
                         <Input
                             type='number'
@@ -77,10 +65,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Short Break'
                             placeholder='Short break time'
                             value={localSettings.shortBreak}
-                            onChange={(value: string) => setLocalSettings(prev => ({
-                                ...prev,
-                                shortBreak: value,
-                            }))}
+                            onChange={(value: string) => handleChangeSettings('shortBreak', value)}
                         />
                         <Input
                             type='number'
@@ -88,10 +73,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Long Break'
                             placeholder='Long break time'
                             value={localSettings.longBreak}
-                            onChange={(value: string) => setLocalSettings(prev => ({
-                                ...prev,
-                                longBreak: value,
-                            }))}
+                            onChange={(value: string) => handleChangeSettings('longBreak', value)}
                         />
                     </div>
 
@@ -103,10 +85,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Long Break Interval'
                             placeholder='Long break interval timer'
                             value={localSettings.longBreakInterval}
-                            onChange={(value: string) => setLocalSettings(prev => ({
-                                ...prev,
-                                longBreakInterval: value,
-                            }))}
+                            onChange={(value: string) => handleChangeSettings('longBreakInterval', value)}
                         />
                     </div>
                     <div className={clsx(cls.volume)}>
@@ -116,12 +95,8 @@ export const Settings = (props: SettingsProps) => {
                             min={0}
                             max={100}
                             step={1}
-                            value={Number(localSettings.volume)}
-                            onChange={(value: string) => setLocalSettings(prev => ({
-                                ...prev,
-                                volume: value,
-                            }))
-                            }
+                            value={settings.volume}
+                            onChange={(value: string) => onUpdateSettings({ ...settings, volume: Number(value) })}
                         />
 
                     </div>
@@ -131,9 +106,8 @@ export const Settings = (props: SettingsProps) => {
                     type='button'
                     className={clsx(cls.save)}
                     onClick={() => {
-                        handleUpdateSettings();
-                        playSound('click', Number(localSettings.volume));
-
+                        playSound('click', settings.volume);
+                        handleSaveSettings();
                     }}
                 >
                     Save
