@@ -1,10 +1,11 @@
 import type { Settings as settingsType } from '@/types';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Input } from '../Input/Input';
 import type { SoundType } from '@/hooks/useAudio';
 import clsx from 'clsx';
 import cls from './Settings.module.scss';
 import { Range } from '../Range/Range';
+import { useClickOutside } from '@/hooks/useClickOutside';
 
 interface SettingsProps {
     settings: settingsType;
@@ -31,9 +32,15 @@ export const Settings = (props: SettingsProps) => {
         onCloseSettings();
     };
 
+    const modalContentRef = useRef<HTMLDivElement | null>(null);
+
+    useClickOutside(modalContentRef, () => {
+        onCloseSettings();
+    })
+
     return (
         <div className={clsx(cls.overlay)}>
-            <div className={clsx(cls.content)}>
+            <div className={clsx(cls.content)} ref={modalContentRef}>
                 <div className={clsx(cls.settings)}>
                     <div className={clsx(cls.header)}>
                         <h2 className={clsx(cls.title)}>Settings</h2>

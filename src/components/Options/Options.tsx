@@ -18,7 +18,7 @@ export const Options = (props: OptionsProps) => {
                 <button
                     key={option.mode}
                     type="button"
-                    className={clsx(cls.button, cls[mode], { [cls.active]: mode === option.mode })}
+                    className={clsx(cls.button, mode === option.mode && [cls.active, cls[mode]])}
                     onClick={() => {
                         onChangeMode(option.mode);
                         onPlaySound('click');
