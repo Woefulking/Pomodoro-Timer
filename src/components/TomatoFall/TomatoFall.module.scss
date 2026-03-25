@@ -2,20 +2,16 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
-  display: flex;
-  justify-content: space-between;
   pointer-events: none;
 
   overflow: hidden;
 }
 
 .tomato {
-  position: relative;
-  top: -50px;
-  bottom: auto;
+  position: absolute;
   width: 40px;
   height: 40px;
   object-fit: contain;
@@ -28,10 +24,10 @@
 
 @keyframes tomatofall {
   from {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(var(--start-y)) rotate(0deg);
   }
 
   to {
-    transform: translateY(calc(100vh + 50px)) rotate(calc(360deg * var(--rotations, 1)));
+    transform: translateY(calc(100vh + 100px)) rotate(calc(360deg * var(--rotations, 1)));
   }
 }

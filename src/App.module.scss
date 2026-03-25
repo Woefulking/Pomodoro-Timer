@@ -1,0 +1,26 @@
+.app {
+  position: relative;
+  width: 400px;
+  height: 400px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.pomodoro {
+    background-color: var(--red);
+  }
+  &.shortBreak {
+    background-color: var(--blue);
+  }
+  &.longBreak {
+    background-color: var(--green);
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

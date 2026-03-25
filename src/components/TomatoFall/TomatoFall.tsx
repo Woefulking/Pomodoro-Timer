@@ -10,6 +10,8 @@ export const TomatoFalls = () => {
         const duration = getRndInteger(5, 25);
         const delay = getRndInteger(0, 5);
         const rotations = getRndInteger(5, 30) / 10;
+        const startLeft = getRndInteger(0, 400);
+        const startY = getRndInteger(-100, -50);
 
         return (
             <img
@@ -18,6 +20,8 @@ export const TomatoFalls = () => {
                 alt="tomato"
                 key={index}
                 style={{
+                    top: `${startY}px`,
+                    left: `${startLeft}px`,
                     animationDuration: `${duration}s`,
                     animationDelay: `${delay}s`,
                     ['--rotations' as any]: rotations,

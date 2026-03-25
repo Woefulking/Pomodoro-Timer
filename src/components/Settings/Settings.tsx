@@ -1,6 +1,5 @@
 import type { Settings as settingsType } from '@/types';
 import { useState } from 'react';
-import { settingsToForm } from '@/helpers/settingsToForm';
 import { Input } from '../Input/Input';
 import type { SoundType } from '@/hooks/useAudio';
 import clsx from 'clsx';
@@ -16,7 +15,7 @@ interface SettingsProps {
 
 export const Settings = (props: SettingsProps) => {
     const { settings, playSound, onCloseSettings, onUpdateSettings } = props;
-    const [localSettings, setLocalSettings] = useState(() => settingsToForm(settings));
+    const [localSettings, setLocalSettings] = useState(settings);
 
     const handleChangeSettings = (key: keyof settingsType, value: string | number) => {
         setLocalSettings(prev => ({ ...prev, [key]: value }));
@@ -57,7 +56,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Pomodoro'
                             placeholder='Pomodoro time'
                             value={localSettings.pomodoro}
-                            onChange={(value: string) => handleChangeSettings('pomodoro', value)}
+                            onChange={(value: number) => handleChangeSettings('pomodoro', value)}
                         />
                         <Input
                             type='number'
@@ -65,7 +64,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Short Break'
                             placeholder='Short break time'
                             value={localSettings.shortBreak}
-                            onChange={(value: string) => handleChangeSettings('shortBreak', value)}
+                            onChange={(value: number) => handleChangeSettings('shortBreak', value)}
                         />
                         <Input
                             type='number'
@@ -73,7 +72,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Long Break'
                             placeholder='Long break time'
                             value={localSettings.longBreak}
-                            onChange={(value: string) => handleChangeSettings('longBreak', value)}
+                            onChange={(value: number) => handleChangeSettings('longBreak', value)}
                         />
                     </div>
 
@@ -85,7 +84,7 @@ export const Settings = (props: SettingsProps) => {
                             label='Long Break Interval'
                             placeholder='Long break interval timer'
                             value={localSettings.longBreakInterval}
-                            onChange={(value: string) => handleChangeSettings('longBreakInterval', value)}
+                            onChange={(value: number) => handleChangeSettings('longBreakInterval', value)}
                         />
                     </div>
                     <div className={clsx(cls.volume)}>

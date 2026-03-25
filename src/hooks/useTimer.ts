@@ -86,9 +86,14 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
   //Сброс таймера
   const reset = () => {
     setIsRunning(false);
-    setTimeLeft(durations[mode]);
+    setTimeLeft(durations[mode] * 60);
     endTime.current = null
   }
 
-  return { timeLeft, mode, toggle, isRunning, reset }
+  const changeMode = (mode: Mode) => {
+    setMode(mode);
+    reset();
+  }
+
+  return { timeLeft, mode, toggle, isRunning, reset, changeMode }
 }
