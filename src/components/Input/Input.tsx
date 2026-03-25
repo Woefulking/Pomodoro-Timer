@@ -10,22 +10,22 @@ interface InputProps extends HTMLInputProps {
     value: number;
     className?: string;
     placeholder: string;
-    min?: number;
-    max?: number;
-    step?: number;
     onChange: (value: number) => void;
 }
 
 export const Input = (props: InputProps) => {
-    const { type, label, value, name, disabled, className, placeholder, min = 1, max = 60, step = 1, onChange, ...otherProps } = props;
+    const { type, label, value, name, disabled, className, placeholder, onChange, ...otherProps } = props;
 
     const [inputValue, setInputValue] = useState(String(value));
+    const min = 1;
 
     useEffect(() => {
         setInputValue(String(value));
     }, [value]);
 
-    const clamp = (val: number) => Math.min(max, Math.max(min, val));
+    const normalize = (val: number) => {
+        return val < min ? min : val;
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.target.value);
@@ -35,27 +35,26 @@ export const Input = (props: InputProps) => {
         const num = Number(inputValue);
 
         if (inputValue === '' || Number.isNaN(num)) {
-            const clamped = clamp(min);
-            onChange(clamped);
-            setInputValue(String(clamped));
+            onChange(min);
+            setInputValue(String(min));
             return;
         }
 
-        const clamped = clamp(num);
-        onChange(clamped);
-        setInputValue(String(clamped));
+        const normalized = normalize(num);
+        onChange(normalized);
+        setInputValue(String(normalized));
     };
 
     const increment = () => {
         const base = Number(inputValue) || min;
-        const next = clamp(base + step);
+        const next = base + 1;
         onChange(next);
         setInputValue(String(next));
     };
 
     const decrement = () => {
         const base = Number(inputValue) || min;
-        const next = clamp(base - step);
+        const next = normalize(base - 1);
         onChange(next);
         setInputValue(String(next));
     };
@@ -82,7 +81,6 @@ export const Input = (props: InputProps) => {
                     <img src="src/assets/images/arrow-down.png" alt="decrease" />
                 </button>
             </div>
-
         </div >
     )
 }

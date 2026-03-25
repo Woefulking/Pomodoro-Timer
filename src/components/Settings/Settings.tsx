@@ -23,12 +23,7 @@ export const Settings = (props: SettingsProps) => {
     }
 
     const handleSaveSettings = () => {
-        onUpdateSettings({
-            pomodoro: Number(localSettings.pomodoro),
-            shortBreak: Number(localSettings.shortBreak),
-            longBreak: Number(localSettings.longBreak),
-            longBreakInterval: Number(localSettings.longBreakInterval),
-        });
+        onUpdateSettings(localSettings);
         onCloseSettings();
     };
 
