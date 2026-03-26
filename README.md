@@ -19,7 +19,7 @@ A pixel-style Pomodoro Timer built with React and TypeScript, featuring customiz
 
 Start, pause, and reset the timer.
 
-![controls](./gifs/controls2.gif)
+![controls](./gifs/controls.gif)
 
 ### Manual Mode Switching
 
