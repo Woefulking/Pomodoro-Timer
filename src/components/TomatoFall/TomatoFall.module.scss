@@ -31,3 +31,7 @@
     transform: translateY(calc(100vh + 150px)) rotate(calc(360deg * var(--rotations, 1)));
   }
 }
+
+.paused {
+  animation-play-state: paused;
+}

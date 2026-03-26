@@ -95,5 +95,5 @@ export function useTimer({ pomodoro, shortBreak, longBreak, longBreakInterval }:
     reset();
   }
 
-  return { timeLeft, mode, toggle, isRunning, reset, changeMode }
+  return { timeLeft, durations, mode, toggle, isRunning, reset, changeMode }
 }

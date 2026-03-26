@@ -14,7 +14,7 @@ function App() {
   const audio = useAudio(settings.volume);
   const timer = useTimer(settings);
 
-  const { timeLeft, mode, isRunning, toggle, reset, changeMode } = timer;
+  const { timeLeft, durations, mode, isRunning, toggle, reset, changeMode } = timer;
   const { play, stop, } = audio;
 
   const [isSettingsOpen, setSettingsOpen] = useState<boolean>(false);
@@ -46,11 +46,7 @@ function App() {
           />
         }
       </div>
-      {
-        isRunning && isPomodoro && (
-          <TomatoFalls />
-        )
-      }
+      <TomatoFalls isRunning={isRunning && isPomodoro} active={timeLeft !== durations[mode] * 60} />
     </div >
   )
 }
