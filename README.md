@@ -19,7 +19,7 @@ A pixel-style Pomodoro Timer built with React and TypeScript, featuring customiz
 
 Start, pause, and reset the timer.
 
-![controls](./gifs/controls.gif)
+![controls](./gifs/controls2.gif)
 
 ### Manual Mode Switching
 
@@ -29,7 +29,7 @@ Switch between Pomodoro, short break, and long break at any time.
 
 ### Custom Settings
 
-Adjust timer durations and sound volume.
+You can adjust timer durations and sound volume at any time, even during an active session
 
 ![controls](./gifs/settings.gif)
 
