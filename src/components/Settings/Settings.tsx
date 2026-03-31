@@ -1,5 +1,5 @@
 import type { Settings as settingsType } from '@/types';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Input } from '../Input/Input';
 import type { SoundType } from '@/hooks/useAudio';
 import clsx from 'clsx';
@@ -16,7 +16,8 @@ interface SettingsProps {
 
 export const Settings = (props: SettingsProps) => {
     const { settings, playSound, onCloseSettings, onUpdateSettings } = props;
-    const [localSettings, setLocalSettings] = useState(settings);
+    const { volume, ...rest } = settings;
+    const [localSettings, setLocalSettings] = useState(rest);
 
     const handleChangeSettings = (key: keyof settingsType, value: string | number) => {
         setLocalSettings(prev => ({ ...prev, [key]: value }));
@@ -32,6 +33,11 @@ export const Settings = (props: SettingsProps) => {
     useClickOutside(modalContentRef, () => {
         onCloseSettings();
     })
+
+    useEffect(() => {
+        const { volume, ...rest } = settings;
+        setLocalSettings(rest);
+    }, [settings]);
 
     return (
         <div className={clsx(cls.overlay)}>
@@ -97,7 +103,7 @@ export const Settings = (props: SettingsProps) => {
                             max={100}
                             step={1}
                             value={settings.volume}
-                            onChange={(value: string) => onUpdateSettings({ ...settings, volume: Number(value) })}
+                            onChange={(value: string) => onUpdateSettings({ volume: Number(value) })}
                         />
 
                     </div>
