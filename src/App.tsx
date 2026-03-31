@@ -21,9 +21,6 @@ function App() {
 
   const isPomodoro = mode === 'pomodoro';
 
-  //@TODO
-  //4) Начать занимастья Electron и подумать над размерами приложения
-
   return (
     <div className={clsx(cls.app, cls[mode])}>
       <div className={clsx(cls.content)}>

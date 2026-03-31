@@ -1,10 +1,12 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react";
+import alarmSound from '@/assets/sounds/alarm.mp3';
+import clickSound from '@/assets/sounds/click.mp3';
 
 export type SoundType = 'alarm' | 'click';
 
 const sounds: Record<SoundType, string> = {
-    alarm: 'src/assets/sounds/alarm.mp3',
-    click: 'src/assets/sounds/click.mp3',
+    alarm: alarmSound,
+    click: clickSound,
 };
 
 export function useAudio(volume: number) {

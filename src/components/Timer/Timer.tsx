@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import cls from './Timer.module.scss';
+import settingsImage from '@/assets/images/settings.png';
 import { formatTime } from '@/helpers/formatTime';
 import type { Mode } from '@/types';
 import type { SoundType } from '@/hooks/useAudio';
@@ -72,7 +73,7 @@ export const Timer = (props: TimerProps) => {
                 }}
             >
                 <img
-                    src='src/assets/images/settings.png'
+                    src={settingsImage}
                     alt='settings'
                 />
             </button>

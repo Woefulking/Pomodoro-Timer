@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import cls from './TomatoFall.module.scss';
+import tomatoImage from '@/assets/images/tomato.png';
 import { useMemo } from "react";
 
 interface TomatoFallProps {
@@ -43,7 +44,7 @@ export const TomatoFalls = (props: TomatoFallProps) => {
                     <img
                         key={t.id}
                         className={clsx(cls.tomato, { [cls.paused]: !isRunning })}
-                        src="src/assets/images/tomato.png"
+                        src={tomatoImage}
                         alt="tomato"
                         style={{
                             top: `${t.startTop}%`,

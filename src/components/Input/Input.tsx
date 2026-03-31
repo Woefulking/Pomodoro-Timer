@@ -1,4 +1,6 @@
 import { useEffect, useState, type HTMLInputTypeAttribute, type InputHTMLAttributes } from "react";
+import arrowUpImage from '@/assets/images/arrow-up.png';
+import arrowDownImage from '@/assets/images/arrow-down.png';
 import clsx from 'clsx';
 import cls from './Input.module.scss';
 
@@ -75,10 +77,10 @@ export const Input = (props: InputProps) => {
             />
             <div className={clsx(cls.controls)}>
                 <button type="button" className={clsx(cls.arrow, cls.up)} onClick={increment}>
-                    <img src="src/assets/images/arrow-up.png" alt="increase" />
+                    <img src={arrowUpImage} alt="increase" />
                 </button>
                 <button type="button" className={clsx(cls.arrow, cls.down)} onClick={decrement}>
-                    <img src="src/assets/images/arrow-down.png" alt="decrease" />
+                    <img src={arrowDownImage} alt="decrease" />
                 </button>
             </div>
         </div >
