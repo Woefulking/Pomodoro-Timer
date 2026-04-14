@@ -1,7 +1,7 @@
 import type { Settings } from "@/types";
 import { useState } from "react";
 
-export const defaultSettings: Settings = {
+const defaultSettings: Settings = {
     pomodoro: 25,
     shortBreak: 5,
     longBreak: 15,
